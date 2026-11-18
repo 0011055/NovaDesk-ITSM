@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NovaDesk ITSM: prototipo académico para la gestión de incidencias del servicio de internet de NovaTech Perú, basado en ITIL 4." />
+  <meta name="theme-color" content="#083f36" />
+  <title>NovaDesk ITSM | Gestión de incidencias</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Saltar al contenido principal</a>
+  <noscript><div class="noscript">NovaDesk requiere JavaScript para habilitar navegación, filtros y simulaciones.</div></noscript>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div><strong>NovaDesk</strong><span>ITSM · ITIL 4</span></div>
+      </div>
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Tablero</button>
+        <button class="nav-item" data-view="new-incident"><span>＋</span> Nueva incidencia</button>
+        <button class="nav-item" data-view="queue"><span>☷</span> Cola del analista <b class="badge">7</b></button>
+        <button class="nav-item" data-view="ticket-detail"><span>✦</span> Ticket INC-1042</button>
+        <button class="nav-item" data-view="escalation"><span>⇧</span> Escalamiento</button>
+        <button class="nav-item" data-view="knowledge"><span>▤</span> Conocimiento</button>
+        <button class="nav-item" data-view="monitoring"><span>◉</span> Monitoreo</button>
+        <button class="nav-item" data-view="reports"><span>▥</span> KPI y reportes</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
+        <div><strong>Operación normal</strong><span>Última verificación: 18:45</span></div>
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent" tabindex="-1">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuButton" aria-label="Abrir menú">☰</button>
+        <div class="search-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar ticket, activo, usuario o artículo..." /></div>
+        <span class="demo-chip" title="Los datos mostrados son sintéticos">Prototipo académico</span>
+        <div class="top-actions">
+          <button class="icon-button" title="Alertas">♢<span class="notification">3</span></button>
+          <div class="user-card"><div class="avatar">RS</div><div><strong>Rodrigo S.</strong><span>Gestor de incidencias</span></div></div>
+        </div>
+      </header>
+
+      <section class="content">
+        <!-- TABLERO -->
+        <div class="view active" id="dashboard">
+          <div class="page-heading">
+            <div><p class="eyebrow">Centro de control</p><h1>Tablero operativo</h1><p>Estado del servicio corporativo de internet en tiempo casi real.</p></div>
+            <div class="actions"><button class="btn secondary" id="refreshDashboard">↻ Actualizar</button><button class="btn primary" data-go="new-incident">＋ Registrar incidencia</button></div>
+          </div>
+          <div class="service-banner success"><div><span class="pulse"></span><strong>Servicio disponible</strong><p>Enlace principal operativo · ISP secundario en espera</p></div><div class="availability"><span>99,72 %</span><small>Disponibilidad mensual</small></div></div>
+          <div class="kpi-grid">
+            <article class="kpi-card"><div class="kpi-icon red">!</div><div><span>Incidencias abiertas</span><strong>7</strong><small>1 crítica · 2 altas</small></div></article>
+            <article class="kpi-card"><div class="kpi-icon amber">◷</div><div><span>MTTR P1</span><strong>46 min</strong><small class="positive">↓ 14 min frente a meta</small></div></article>
+            <article class="kpi-card"><div class="kpi-icon blue">✓</div><div><span>Cumplimiento SLA</span><strong>93,4 %</strong><small class="positive">↑ 3,4 puntos</small></div></article>
+            <article class="kpi-card"><div class="kpi-icon green">◎</div><div><span>Detección proactiva</span><strong>82 %</strong><small>Meta: ≥ 80 %</small></div></article>
+          </div>
+          <div class="grid-2">
+            <article class="panel"><div class="panel-header"><div><h2>Incidencias recientes</h2><p>Priorizadas por impacto y urgencia</p></div><button class="text-button" data-go="queue">Ver todas →</button></div>
+              <div class="table-wrap"><table><thead><tr><th>ID</th><th>Resumen</th><th>Prioridad</th><th>Estado</th><th>SLA</th></tr></thead><tbody id="recentIncidents"></tbody></table></div>
+            </article>
+            <article class="panel"><div class="panel-header"><div><h2>Salud de infraestructura</h2><p>Componentes críticos monitoreados</p></div><span class="live-chip">● En vivo</span></div>
+              <div class="health-list">
+                <div class="health-row"><span class="device-icon">◈</span><div><strong>ISP Principal · Fibra</strong><small>Latencia 18 ms · Pérdida 0,2 %</small></div><span class="state ok">Operativo</span></div>
+                <div class="health-row"><span class="device-icon">◇</span><div><strong>ISP Secundario · Fibra</strong><small>Latencia 31 ms · En espera</small></div><span class="state standby">Standby</span></div>
+                <div class="health-row"><span class="device-icon">▣</span><div><strong>Firewall dual-WAN</strong><small>CPU 34 % · Memoria 51 %</small></div><span class="state ok">Operativo</span></div>
+                <div class="health-row"><span class="device-icon">⌁</span><div><strong>VPN oficina secundaria</strong><small>12 sesiones activas</small></div><span class="state warn">Degradado</span></div>
+              </div>
+            </article>
+          </div>
+          <div class="grid-2">
+            <article class="panel"><div class="panel-header"><div><h2>Tendencia semanal</h2><p>Incidencias registradas y resueltas</p></div></div><div class="bar-chart" id="weeklyChart"></div></article>
+            <article class="panel"><div class="panel-header"><div><h2>Distribución por categoría</h2><p>Últimos 30 días</p></div></div><div class="donut-layout"><div class="donut"><div><strong>47</strong><span>Total</span></div></div><ul class="legend"><li><i class="l1"></i>Conectividad WAN <b>38 %</b></li><li><i class="l2"></i>DNS y navegación <b>26 %</b></li><li><i class="l3"></i>VPN <b>21 %</b></li><li><i class="l4"></i>Wi-Fi <b>15 %</b></li></ul></div></article>
+          </div>
+        </div>
+
+        <!-- NUEVA INCIDENCIA -->
+        <div class="view" id="new-incident">
+          <div class="page-heading"><div><p class="eyebrow">CP-01 · Registro</p><h1>Nueva incidencia</h1><p>Registra una interrupción o degradación del servicio.</p></div><span class="draft-chip">Borrador guardado</span></div>
+          <form id="incidentForm" class="form-layout">
+            <article class="panel form-main">
+              <div class="section-title"><span>1</span><div><h2>Información del servicio</h2><p>Identifica el alcance inicial de la afectación.</p></div></div>
+              <div class="form-grid">
+                <label>Servicio afectado<select required><option value="">Seleccionar...</option><option selected>Internet corporativo</option><option>VPN</option><option>DNS</option><option>Wi-Fi corporativo</option></select></label>
+                <label>Sede<select required><option selected>Sede principal · Lima</option><option>Oficina secundaria</option><option>Ambas sedes</option></select></label>
+                <label>Solicitante<input required value="Ana Torres" /></label>
+                <label>Área<input required value="Operaciones" /></label>
+              </div>
+              <div class="section-title"><span>2</span><div><h2>Descripción de la incidencia</h2><p>Incluye síntomas verificables y evita diagnósticos prematuros.</p></div></div>
+              <label>Título<input id="incidentTitle" required maxlength="100" value="Lentitud generalizada en aplicaciones web" /></label>
+              <label>Descripción<textarea required rows="5">Desde las 18:32 se observa demora superior a 8 segundos al acceder al CRM y al ERP. La videoconferencia presenta cortes intermitentes. Afecta a aproximadamente 35 usuarios.</textarea></label>
+              <div class="form-grid">
+                <label>Categoría<select><option>Conectividad WAN</option><option>DNS</option><option>VPN</option><option>Wi-Fi</option></select></label>
+                <label>Activo relacionado<select><option>FW-LIM-01 · Firewall perimetral</option><option>RTR-ISP-01 · Router principal</option><option>SW-CORE-01 · Switch núcleo</option></select></label>
+              </div>
+              <label class="upload-zone"><input type="file" hidden /><span>⇧</span><strong>Adjuntar evidencia</strong><small>Capturas, archivos de registro o prueba de velocidad · Máx. 10 MB</small></label>
+            </article>
+            <aside class="panel form-side">
+              <h2>Evaluación de prioridad</h2><p>La prioridad se calcula mediante impacto × urgencia.</p>
+              <label>Impacto<select id="impact"><option value="1">Bajo · 1 usuario</option><option value="2" selected>Medio · área o grupo</option><option value="3">Alto · sede o servicio crítico</option></select></label>
+              <label>Urgencia<select id="urgency"><option value="1">Baja · existe alternativa</option><option value="2">Media · alternativa limitada</option><option value="3" selected>Alta · sin alternativa</option></select></label>
+              <div class="priority-result"><span>Prioridad calculada</span><strong id="priorityResult" class="priority p1">P1 · Crítica</strong><small id="priorityTarget">Respuesta: 5 min · Restauración: 60 min</small></div>
+              <div class="check-card"><strong>Antes de enviar</strong><label><input type="checkbox" checked /> Confirmé el alcance con el solicitante</label><label><input type="checkbox" checked /> No incluí contraseñas ni datos sensibles</label></div>
+              <button class="btn primary full" type="submit">Crear incidencia</button><button class="btn secondary full" type="button">Guardar borrador</button>
+            </aside>
+          </form>
+        </div>
+
+        <!-- COLA -->
+        <div class="view" id="queue">
+          <div class="page-heading"><div><p class="eyebrow">Operación</p><h1>Cola del analista</h1><p>Incidencias ordenadas por prioridad y vencimiento del SLA.</p></div><button class="btn primary" data-go="new-incident">＋ Nuevo ticket</button></div>
+          <div class="toolbar panel"><div class="filter-group"><button class="filter active" data-filter="all">Todas <b>7</b></button><button class="filter" data-filter="P1">P1 <b>1</b></button><button class="filter" data-filter="P2">P2 <b>2</b></button><button class="filter" data-filter="mine">Mis tickets <b>4</b></button></div><div class="search-small"><span>⌕</span><input id="queueSearch" placeholder="Filtrar cola..." /></div></div>
+          <article class="panel"><div class="table-wrap"><table class="queue-table"><thead><tr><th><input type="checkbox" /></th><th>ID</th><th>Incidencia</th><th>Prioridad</th><th>Estado</th><th>Asignado</th><th>SLA restante</th><th></th></tr></thead><tbody id="queueBody"></tbody></table></div></article>
+        </div>
+
+        <!-- DETALLE -->
+        <div class="view" id="ticket-detail">
+          <div class="ticket-heading"><div><p class="eyebrow">INC-1042 · Internet corporativo</p><h1>Intermitencia del enlace principal</h1><div class="ticket-tags"><span class="priority p1">P1 · Crítica</span><span class="state progress">En diagnóstico</span><span class="major-chip">Incidente mayor</span></div></div><div class="actions"><button class="btn secondary">Editar</button><button class="btn primary" data-go="escalation">Escalar</button></div></div>
+          <div class="ticket-layout">
+            <div>
+              <article class="panel"><div class="panel-header"><div><h2>Resumen</h2><p>Registrado hoy a las 18:32 por monitoreo</p></div><div class="sla-clock"><span>SLA restauración</span><strong id="slaClock">00:37:18</strong><small>restantes</small></div></div><p>El sensor WAN detectó pérdida de paquetes superior al 18 % y latencia variable. Se reportan cortes en CRM, ERP, VoIP y videoconferencia para la sede principal.</p><div class="info-grid"><div><span>Impacto</span><strong>Alto · Sede principal</strong></div><div><span>Urgencia</span><strong>Alta · Sin alternativa estable</strong></div><div><span>Usuarios afectados</span><strong>≈ 120</strong></div><div><span>Activo</span><strong>RTR-ISP-01</strong></div></div></article>
+              <article class="panel"><div class="panel-header"><div><h2>Cronología</h2><p>Registro íntegro de acciones y comunicaciones</p></div><button class="btn secondary small" id="addNote">＋ Añadir nota</button></div><div class="timeline" id="timeline">
+                <div class="timeline-item current"><i></i><time>18:45</time><div><strong>Diagnóstico de segundo nivel</strong><p>Se confirma pérdida en el salto del proveedor. Se recopilan MTR y logs del firewall.</p><small>Lucía Paredes · Redes</small></div></div>
+                <div class="timeline-item"><i></i><time>18:38</time><div><strong>Declarado incidente mayor</strong><p>Se abre canal de coordinación y se notifica a Gerencia y Operaciones.</p><small>Rodrigo S. · Gestor</small></div></div>
+                <div class="timeline-item"><i></i><time>18:34</time><div><strong>Prioridad calculada: P1</strong><p>Impacto alto y urgencia alta. SLA de restauración: 60 minutos.</p><small>NovaDesk Automation</small></div></div>
+                <div class="timeline-item"><i></i><time>18:32</time><div><strong>Incidencia creada automáticamente</strong><p>Alerta WAN-Loss superó umbral durante 3 minutos consecutivos.</p><small>Zabbix Integration</small></div></div>
+              </div></article>
+            </div>
+            <aside>
+              <article class="panel"><h2>Responsables</h2><div class="person"><div class="avatar purple">RS</div><div><span>Gestor</span><strong>Rodrigo S.</strong></div></div><div class="person"><div class="avatar orange">LP</div><div><span>Segundo nivel</span><strong>Lucía Paredes</strong></div></div><hr/><label>Estado<select><option>En diagnóstico</option><option>Escalado</option><option>En espera</option><option>Resuelto</option></select></label><label>Grupo<select><option>Redes y conectividad</option><option>Mesa de servicio</option><option>Seguridad</option></select></label></article>
+              <article class="panel"><h2>Comunicaciones</h2><div class="comm-item"><span>18:39</span><p>Notificación inicial enviada a usuarios afectados.</p></div><div class="comm-item"><span>Próxima: 19:00</span><p>Actualización P1 programada.</p></div><button class="btn secondary full">Enviar actualización</button></article>
+              <article class="panel danger-panel"><h2>Acciones críticas</h2><button class="btn warning full" id="activateFailover">Activar failover controlado</button><button class="btn danger-outline full" id="resolveTicket">Marcar como resuelto</button></article>
+            </aside>
+          </div>
+        </div>
+
+        <!-- ESCALAMIENTO -->
+        <div class="view" id="escalation">
+          <div class="page-heading"><div><p class="eyebrow">CP-03 · INC-1042</p><h1>Escalamiento al proveedor</h1><p>Transfiere el caso con contexto técnico completo y trazable.</p></div><button class="btn secondary" data-go="ticket-detail">← Volver al ticket</button></div>
+          <div class="form-layout"><article class="panel form-main"><div class="section-title"><span>1</span><div><h2>Destino del escalamiento</h2><p>Selecciona nivel, proveedor y contacto contractual.</p></div></div><div class="form-grid"><label>Nivel<select><option>N3 · Proveedor externo</option></select></label><label>Proveedor<select><option>ISP Principal · Fibra empresarial</option><option>ISP Secundario</option></select></label><label>Canal<select><option>Portal de soporte + teléfono P1</option></select></label><label>Contrato<input value="ISP-LIM-2026-01" /></label></div>
+          <div class="section-title"><span>2</span><div><h2>Contexto técnico</h2><p>La evidencia evita repetir verificaciones y reduce el tiempo de restauración.</p></div></div><label>Motivo<textarea rows="3">Pérdida de paquetes y latencia variable confirmada fuera del perímetro de NovaTech. Afecta servicios críticos en la sede principal.</textarea></label><div class="evidence-list"><div><span>▧</span><div><strong>mtr_isp_1844.txt</strong><small>12 KB · Verificado</small></div><button>×</button></div><div><span>▧</span><div><strong>firewall_wan_logs.csv</strong><small>284 KB · Verificado</small></div><button>×</button></div><div><span>▧</span><div><strong>latency_graph.png</strong><small>96 KB · Verificado</small></div><button>×</button></div></div>
+          <div class="section-title"><span>3</span><div><h2>Pruebas realizadas</h2><p>Marca las validaciones completadas.</p></div></div><div class="check-grid"><label><input type="checkbox" checked /> Enlace físico y energía</label><label><input type="checkbox" checked /> Firewall y rutas</label><label><input type="checkbox" checked /> DNS interno y externo</label><label><input type="checkbox" checked /> Ping y MTR</label><label><input type="checkbox" /> Reinicio de CPE</label><label><input type="checkbox" checked /> Comparación con ISP secundario</label></div></article>
+          <aside class="panel form-side"><h2>Resumen para proveedor</h2><dl class="summary-list"><div><dt>Prioridad</dt><dd><span class="priority p1">P1</span></dd></div><div><dt>Inicio</dt><dd>18:32</dd></div><div><dt>Afectados</dt><dd>≈ 120</dd></div><div><dt>SLA contractual</dt><dd>60 min</dd></div><div><dt>Evidencias</dt><dd>3 archivos</dd></div></dl><label>Número de caso ISP<input id="providerCase" placeholder="Se asignará al enviar" /></label><button class="btn primary full" id="sendEscalation">Enviar escalamiento</button><button class="btn secondary full">Guardar borrador</button></aside></div>
+        </div>
+
+        <!-- CONOCIMIENTO -->
+        <div class="view" id="knowledge">
+          <div class="page-heading"><div><p class="eyebrow">Gestión del conocimiento</p><h1>Base de conocimiento</h1><p>Soluciones verificadas para reducir diagnóstico y recurrencia.</p></div><button class="btn primary" id="newArticle">＋ Nuevo artículo</button></div>
+          <div class="knowledge-search panel"><span>⌕</span><input id="knowledgeSearch" placeholder="Buscar por síntoma, causa, activo o solución..." /><button class="btn primary">Buscar</button></div>
+          <div class="category-chips"><button class="active">Todos</button><button>Internet</button><button>VPN</button><button>DNS</button><button>Wi-Fi</button><button>Firewall</button></div>
+          <div class="article-grid" id="articleGrid"></div>
+        </div>
+
+        <!-- MONITOREO -->
+        <div class="view" id="monitoring">
+          <div class="page-heading"><div><p class="eyebrow">CP-04 y CP-05</p><h1>Monitoreo y continuidad</h1><p>Observabilidad del servicio, alertas y prueba de conmutación.</p></div><button class="btn warning" id="runFailover">▶ Ejecutar prueba de failover</button></div>
+          <div class="monitor-grid"><article class="panel monitor-card"><div class="monitor-head"><div><span class="status-dot"></span><h2>ISP Principal</h2></div><span class="state ok">Operativo</span></div><div class="big-metric"><strong>18</strong><span>ms latencia</span></div><div class="mini-metrics"><div><span>Pérdida</span><b>0,2 %</b></div><div><span>Jitter</span><b>4 ms</b></div><div><span>Uso</span><b>68 %</b></div></div></article>
+          <article class="panel monitor-card"><div class="monitor-head"><div><span class="status-dot standby-dot"></span><h2>ISP Secundario</h2></div><span class="state standby">Standby</span></div><div class="big-metric"><strong>31</strong><span>ms latencia</span></div><div class="mini-metrics"><div><span>Pérdida</span><b>0,0 %</b></div><div><span>Jitter</span><b>6 ms</b></div><div><span>Uso</span><b>2 %</b></div></div></article>
+          <article class="panel monitor-card"><div class="monitor-head"><div><span class="status-dot"></span><h2>Firewall</h2></div><span class="state ok">Operativo</span></div><div class="big-metric"><strong>34</strong><span>% CPU</span></div><div class="mini-metrics"><div><span>Memoria</span><b>51 %</b></div><div><span>Sesiones</span><b>1.842</b></div><div><span>VPN</span><b>46</b></div></div></article></div>
+          <div class="grid-2"><article class="panel"><div class="panel-header"><div><h2>Latencia últimas 12 horas</h2><p>Umbral de alerta: 80 ms</p></div></div><div class="line-chart"><svg viewBox="0 0 800 260" role="img" aria-label="Gráfico de latencia"><line x1="40" y1="210" x2="770" y2="210"/><line x1="40" y1="40" x2="40" y2="210"/><polyline points="40,165 100,160 160,169 220,150 280,156 340,140 400,145 460,90 520,110 580,58 640,130 700,150 770,158"/><line class="threshold" x1="40" y1="95" x2="770" y2="95"/></svg></div></article>
+          <article class="panel"><div class="panel-header"><div><h2>Alertas activas</h2><p>Eventos correlacionados</p></div></div><div class="alert-list" id="alertList"><div class="alert-row critical"><span>!</span><div><strong>Pérdida de paquetes WAN</strong><small>18:32 · Generó INC-1042</small></div><b>P1</b></div><div class="alert-row warning"><span>!</span><div><strong>VPN secundaria degradada</strong><small>18:21 · Bajo observación</small></div><b>P3</b></div><div class="alert-row info"><span>i</span><div><strong>Uso WAN superior a 65 %</strong><small>17:58 · Capacidad</small></div><b>Info</b></div></div></article></div>
+          <article class="panel"><div class="panel-header"><div><h2>Historial de pruebas de failover</h2><p>Evidencia de continuidad del servicio</p></div></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Responsable</th><th>Conmutación</th><th>Retorno</th><th>Resultado</th></tr></thead><tbody id="failoverHistory"><tr><td>02/11/2026 10:00</td><td>Lucía Paredes</td><td>18 s</td><td>24 s</td><td><span class="state ok">Aprobado</span></td></tr><tr><td>05/10/2026 10:00</td><td>Marco Ruiz</td><td>21 s</td><td>29 s</td><td><span class="state ok">Aprobado</span></td></tr></tbody></table></div></article>
+        </div>
+
+        <!-- REPORTES -->
+        <div class="view" id="reports">
+          <div class="page-heading"><div><p class="eyebrow">CP-08 · Medición</p><h1>KPI y reportes</h1><p>Resultados simulados del prototipo para demostrar fórmulas y trazabilidad.</p></div><div class="actions"><select class="period-select"><option>Octubre 2026</option><option>Septiembre 2026</option></select><button class="btn secondary" id="exportReport">⇩ Exportar</button></div></div>
+          <div class="notice"><strong>Datos demostrativos.</strong> Los valores de esta pantalla son sintéticos y no representan una implementación real de NovaTech Perú</div>
+          <div class="kpi-grid report-kpis"><article class="kpi-card"><div><span>Disponibilidad</span><strong>99,72 %</strong><small class="positive">Meta ≥ 99,5 % · Cumple</small></div></article><article class="kpi-card"><div><span>MTTD</span><strong>3,8 min</strong><small class="positive">Meta ≤ 5 min · Cumple</small></div></article><article class="kpi-card"><div><span>MTTA</span><strong>7,2 min</strong><small class="positive">Meta ≤ 10 min · Cumple</small></div></article><article class="kpi-card"><div><span>MTTR P1</span><strong>46 min</strong><small class="positive">Meta ≤ 60 min · Cumple</small></div></article></div>
+          <div class="grid-2"><article class="panel"><div class="panel-header"><div><h2>Cumplimiento mensual</h2><p>Meta y resultado por indicador</p></div></div><div class="progress-list"><div><div><span>SLA</span><b>93,4 %</b></div><progress value="93.4" max="100"></progress><small>Meta: 90 %</small></div><div><div><span>Resolución en primer contacto</span><b>74 %</b></div><progress value="74" max="100"></progress><small>Meta: 70 %</small></div><div><div><span>Detección proactiva</span><b>82 %</b></div><progress value="82" max="100"></progress><small>Meta: 80 %</small></div><div><div><span>CSAT</span><b>88 %</b></div><progress value="88" max="100"></progress><small>Meta: 85 %</small></div></div></article>
+          <article class="panel"><div class="panel-header"><div><h2>Comparación demostrativa</h2><p>Línea base sintética frente al piloto sintético</p></div></div><div class="comparison"><div class="comparison-row"><span>MTTR P1</span><div><i style="width:86%"></i></div><b>90 → 46 min</b></div><div class="comparison-row"><span>Registro formal</span><div><i style="width:100%"></i></div><b>42 → 100 %</b></div><div class="comparison-row"><span>Proactividad</span><div><i style="width:82%"></i></div><b>15 → 82 %</b></div><div class="comparison-row"><span>Reapertura</span><div><i style="width:35%"></i></div><b>12 → 4 %</b></div></div></article></div>
+          <article class="panel"><div class="panel-header"><div><h2>Diccionario de KPI</h2><p>Fórmulas reproducibles y fuentes de datos</p></div></div><div class="table-wrap"><table><thead><tr><th>Indicador</th><th>Fórmula</th><th>Fuente</th><th>Responsable</th><th>Frecuencia</th></tr></thead><tbody><tr><td>Disponibilidad</td><td>(TA − ID) / TA × 100</td><td>Zabbix</td><td>Redes</td><td>Mensual</td></tr><tr><td>MTTD</td><td>Promedio detección − inicio</td><td>Zabbix + ITSM</td><td>Gestor</td><td>Semanal</td></tr><tr><td>MTTR</td><td>Promedio restauración − inicio</td><td>ITSM</td><td>Gestor</td><td>Mensual</td></tr><tr><td>SLA</td><td>Dentro de objetivo / cerrados × 100</td><td>ITSM</td><td>Jefe TI</td><td>Mensual</td></tr></tbody></table></div></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose">×</button><div class="modal-icon" id="modalIcon">✓</div><h2 id="modalTitle">Operación completada</h2><p id="modalMessage"></p><button class="btn primary" id="modalAction">Aceptar</button></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
